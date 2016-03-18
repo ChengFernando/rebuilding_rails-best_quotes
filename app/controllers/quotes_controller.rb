@@ -8,3 +8,5 @@ class QuotesController < Rulers::Controller
 		raise "It's a bad one"
 	end
 end
+
+# test on "rerun" gem 
