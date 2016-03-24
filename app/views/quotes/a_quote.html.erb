@@ -4,5 +4,8 @@
 	</p>
 
 	<p>
-	  Ruby version <%= RUBY_VERSION %>
+	  Ruby version <%= env["HTTP_HOST"] %>
 	</p>
+
+	<p> <%= env %> </p>
+ 
