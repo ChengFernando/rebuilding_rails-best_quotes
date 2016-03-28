@@ -19,14 +19,31 @@ class QuotesController < Rulers::Controller
 
   def new_quote
     attrs = {
-        "submitter" => "web user",
-        "quote" => "A picture is worth one k pixels",
-        "attribution" => "me"
-      }
+      "submitter" => "web user",
+      "quote" => "A picture is worth one k pixels",
+      "attribution" => "me"
+    }
 
-    m = FileModel.create attrs
+    m = FileModel.create(attrs)
     render :quote, :obj => m
   end
+
+
+  def update
+    raise "POST only route" unless env["REQUEST_METHOD"] == "POST"
+
+    params = env["rack.input"].read.split('&').map { |param|  param.split '=' }.to_h
+
+    raise "NO ID supplied" unless params["id"]
+
+    @quote_obj = FileModel.find params["id"].to_i
+    params.keys.each {|key| @quote_obj[key] = params[key]}
+    @quote_obj.save
+
+    render :quote
+  end
+
+
 
 
 end
