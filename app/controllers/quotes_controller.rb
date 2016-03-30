@@ -28,23 +28,27 @@ class QuotesController < Rulers::Controller
     render :quote, :obj => m
   end
 
-
   def update
-    raise "POST only route" unless env["REQUEST_METHOD"] == "POST"
+    # raise "POST only route" unless env["REQUEST_METHOD"] == "POST"
 
-    params = env["rack.input"].read.split('&').map { |param|  param.split '=' }.to_h
-
-    raise "NO ID supplied" unless params["id"]
-
-    @quote_obj = FileModel.find params["id"].to_i
-    params.keys.each {|key| @quote_obj[key] = params[key]}
-    @quote_obj.save
-
-    render :quote
+    attrs = {
+      "submitter" => "test" 
+      "quote" => "test",
+      "attribution" => "test"     
+    } 
+    m = FileModel.update(attrs, 1)
+    render :quote, :obj => m
   end
+    # raise "POST only route" unless env["REQUEST_METHOD"] == "POST"
 
+    # params = env["rack.input"].read.split('&').map { |param|  param.split '=' }.to_h
 
+    # raise "NO ID supplied" unless params["id"]
 
+    # @quote_obj = FileModel.find params["id"].to_i
+    # params.keys.each {|key| @quote_obj[key] = params[key]}
+    # @quote_obj.save
 
+    # render :quote
 end
 # test on "rerun" gem 
